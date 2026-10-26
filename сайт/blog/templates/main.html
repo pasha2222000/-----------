@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Главная страница</title>
+    <link rel="stylesheet" href="../static/main.css">
+</head>
+
+<body>
+    <div class="header">
+        <h1>Главная</h1>
+
+        <form action="/search" method="GET">
+            <input type="text" name="q">
+            <button type="submit">Найти</button>
+        </form>
+        <div>
+            {% if user.is_authenticated %}
+                <a href="{% url 'post_create' %}"></a>
+                    <form action="{% url 'logout' %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit">Выйти</button>
+                    </form>
+            {% else %}
+                <a href="{% url 'register'  %}">Регистрация</a>
+                <a href="{% url 'login'  %}">Логин</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <ul>
+        {% for  post in posts %}
+            <li>
+                <h2>{{post.title}}</h2>
+                <p>{{post.content}}</p>
+                <a href="{% url 'post_update' post.id %}">Редактировать</a>
+                <a href="{% url 'post_delete' post.id %}">Удалить</a>
+            </li>
+        {% endfor %}
+    </ul>
+    <div class="users-section">
+        <h3>Все пользователи:</h3>
+        {% if users %}
+            <ul class="users-list">
+            {% for user in users %}
+                <li>
+                    <a href="{% url 'user_page' user.id %}">
+                        {{ user.user.username }}
+                    </a>
+                </li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p>Пользователя пока нет. <a href="{% url 'register' %}">Зарегистрируйтесь первым!</a></p>
+        {% endif %}
+    </div>
+</body>
+</html>

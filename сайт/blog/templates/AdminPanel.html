@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админ панель</title>
+</head>
+<body>
+    <ul>
+        {% for post in zero_posts %}
+        <li>
+            <h4>{{post[1]}}</h4>
+            <p>{{post[2]}}</p>
+            <a href="/admin/post/{{post[0]}}/approve">Разрешить</a>
+            <a href="/admin/post/{{post[0]}}/disapprove">Запретить</a>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
